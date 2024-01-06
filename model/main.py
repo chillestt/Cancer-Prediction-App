@@ -25,7 +25,7 @@ def create_model(data):
     return model, scaler
 
 def get_clean_data():
-    data = pd.read_csv("../data/data.csv")
+    data = pd.read_csv("data/data.csv")
     # drop unnecessary columns
     data = data.drop(["Unnamed: 32", "id"], axis=1)
     #
@@ -41,9 +41,9 @@ def main():
 
     model, scaler = create_model(data)
 
-    with open('model/model.pkl', 'wb') as f:
+    with open('model.pkl', 'wb') as f:
         pickle.dump(model, f)
-    with open('model/scaler.pkl', 'wb') as g:
+    with open('scaler.pkl', 'wb') as g:
         pickle.dump(scaler, g)
 
 
