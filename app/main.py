@@ -7,7 +7,7 @@ import pickle
 
 
 def get_clean_data():
-    data = pd.read_csv("data/data.csv")
+    data = pd.read_csv("../data/data.csv")
     # drop unnecessary columns
     data = data.drop(["Unnamed: 32", "id"], axis=1)
     #
@@ -53,17 +53,18 @@ def get_radar_chart(input_data):
 
 
 def add_prediction(input_data):
-    model = pickle.load(open("model/model.pkl", "rb"))
-    scaler = pickle.load(open("model/scaler.pkl", "rb")) 
+    model = pickle.load(open("../model/model.pkl", "rb"))
+    scaler = pickle.load(open("../model/scaler.pkl", "rb")) 
 
     input_array = np.array(list(input_data.values())).reshape(1, -1)
     input_array_scaled = scaler.transform(input_array)
     prediction = model.predict(input_array_scaled)
+    print(prediction)
 
     st.subheader("Cell cluster prediction")
     st.write("The cell cluster is:")
 
-    if prediction[0] == 0:
+    if prediction[0] == 'B':
         st.write("<span class='diagnosis benign'>Benign</span>", unsafe_allow_html=True)
     else:
         st.write("<span class='diagnosis malicious'>Malicious</span>", unsafe_allow_html=True)
@@ -145,7 +146,7 @@ def main():
         initial_sidebar_state="expanded"
     )
 
-    with open("assets/style.css") as f:
+    with open("../assets/style.css") as f:
         st.markdown("<style>{}</style>".format(f.read()), unsafe_allow_html=True)
 
     with st.container():
